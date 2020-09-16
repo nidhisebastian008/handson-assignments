@@ -38,7 +38,14 @@ class Account
     }
     void withdraw(double amt)
     {
-        bal=bal-amt;
+        if(bal-amt>=0)
+        {
+            bal=bal-amt;
+        }
+        else
+        {
+            System.out.println("Balance Insufficient");
+        }
     }
     void display()
     {
