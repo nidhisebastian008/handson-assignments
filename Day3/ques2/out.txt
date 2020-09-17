@@ -1,0 +1,12 @@
+---- Account Information ----
+Account Number: 1111
+Balance: 50000.0
+You must have minimum 5000Rs. balance
+Withdraw limit in Savings is 50000
+deposits amount to account
+---- Account Information ----
+Account Number: 1111
+Balance: 45000.0
+You must have minimum 5000Rs. balance
+Withdraw limit in Savings is 50000
+deposits amount to account
