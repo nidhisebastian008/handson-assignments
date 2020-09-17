@@ -1,0 +1,10 @@
+---- Account Information ----
+Account Number: 2111
+Balance: 53000.0
+You must have minimum 5000Rs. balance
+Withdraw limit in Savings is 50000
+---- Account Information ----
+Account Number: 2111
+Balance: 54000.0
+You must have minimum 5000Rs. balance
+Withdraw limit in Savings is 50000
