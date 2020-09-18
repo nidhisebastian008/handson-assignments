@@ -1,0 +1,4 @@
+amin id124
+salary50000.0
+amin id124
+salary55000.0
