@@ -20,11 +20,7 @@ public class CollectionBackedDao implements AccountDao {
 	public Account[] fetchAccounts() {
 		// TODO Auto-generated method stub
 		Account[]accountArray= new Account[accountList.size()];
-		int i=0;
-		for(Account acc:accountList)
-		{
-			accountArray[i++]=acc;
-		}
+		accountArray=accountList.toArray(accountArray);
 		return accountArray;
 	}
 
