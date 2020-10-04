@@ -7,7 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="AddContactServlet" method="post">
+<form action="EditContactServlet" method="post">
+		<label>
+			Contact Id<input type = "number" name = "contactid" required>
+		</label>
 		<label>
 			Name <input type = "text" name = "contactname" required>
 		</label>
@@ -16,7 +19,7 @@
 			Phone <input type = "number" name = "contactphone" required>
 		</label>
 		<br />
-		<input type = "submit" value = "Add Contact">
+		<input type = "submit" value = "Edit Contact">
 </form>
 
 </body>

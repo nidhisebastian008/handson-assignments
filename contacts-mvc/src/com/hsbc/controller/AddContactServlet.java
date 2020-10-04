@@ -8,6 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.hsbc.model.beans.Contact;
+import com.hsbc.model.beans.User;
+import com.hsbc.model.service.UserService;
+import com.hsbc.model.utilities.UserFactory;
 
 /**
  * Servlet implementation class AddContactServlet
@@ -40,8 +46,18 @@ public class AddContactServlet extends HttpServlet {
 //		doGet(request, response);
 		String contactName=request.getParameter("contactname");
 		long contactPhone=Long.parseLong(request.getParameter("contactphone"));
+		
+		HttpSession session=request.getSession();
+		User sessionUser=((User) session.getAttribute("userKey"));
+		
+		
 		UserService service = (UserService)UserFactory.getInstance("service");
-		service.addContact(user,contactName,contactPhone);
+		
+		Contact newContact= new Contact();
+		newContact.setUserId(sessionUser.getUserId());
+		newContact.setContactName(contactName);
+		newContact.setContactPhone(contactPhone);
+		service.createContact(sessionUser.getUserId(), newContact);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("loginsuccess.jsp");
 		rd.include(request, response);

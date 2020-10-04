@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hsbc.exception.AuthenticationException;
@@ -60,7 +61,7 @@ public class JDBCBackedUserDao  implements UserDao{
 			} 
 			
 			PreparedStatement preparedStatement = 
-					connection.prepareStatement("insert into profile_table values(?,?,?,?)");
+					connection.prepareStatement("insert into profile_table values(?,?,?,?,?)");
 			preparedStatement.setInt(1, seq);
 			//
 			user.setUserId(seq);
@@ -83,7 +84,27 @@ public class JDBCBackedUserDao  implements UserDao{
 	@Override
 	public List<User> fetchAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		List<User> list = new ArrayList<User>();
+		try {
+			Connection connection = DBUtility.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from profile_table");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				User user = new User();
+				user.setUserId(resultSet.getInt("profile_id"));
+				user.setName(resultSet.getString("name"));
+				user.setPassword(resultSet.getString("password"));
+				user.setPhone(resultSet.getLong("phone"));
+				user.setDob(resultSet.getString("dob"));
+				list.add(user);
+			}
+			resultSet.close();
+			preparedStatement.close();
+			connection.close();
+		} catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
@@ -116,7 +137,34 @@ public class JDBCBackedUserDao  implements UserDao{
 	@Override
 	public List<Contact> fetchAllContacts(int userId) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Contact> list = new ArrayList<Contact>();
+		try {
+			Connection connection = DBUtility.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from contact_table where profile_id_ref=?");
+			preparedStatement.setInt(1, userId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+//				User user = new User();
+//				user.setUserId(resultSet.getInt("user_id"));
+//				user.setName(resultSet.getString("name"));
+//				user.setPassword(resultSet.getString("password"));
+//				user.setPhone(resultSet.getLong("phone"));
+				Contact contact= new Contact();
+				contact.setUserId(resultSet.getInt("profile_id_ref"));
+				contact.setContactId(resultSet.getInt("contact_id"));
+				contact.setContactName(resultSet.getString("contact_name"));
+				contact.setContactPhone(resultSet.getLong("contact_phone"));
+				
+				list.add(contact);
+			}
+			resultSet.close();
+			preparedStatement.close();
+			connection.close();
+		} catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return list;
+
 	}
 
 	@Override
@@ -141,7 +189,7 @@ public class JDBCBackedUserDao  implements UserDao{
 			preparedStatement.setInt(2, seq);
 			contact.setContactId(seq);
 			//
-			contact.setContactId(seq);
+			
 			//
 			preparedStatement.setString(3, contact.getContactName());
 			preparedStatement.setLong(4, contact.getContactPhone());
@@ -158,21 +206,22 @@ public class JDBCBackedUserDao  implements UserDao{
 	}
 
 	@Override
-	public Contact updateContact(int contactId,int contactNumber,int contactPhone) {
+	public boolean updateContact(int contactId,String contactName,long contactPhone) {
 		try
 		{
 			Connection connection = DBUtility.getConnection();
-			String updateQuery = "update contact_table set   contact_name= ?  , contact_phone= ? where contact_id = ? ";
+			String updateQuery = "update  contact_table set contact_name=?,contact_phone=?  where contact_id = ? ";
 			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
 			
-			preparedStatement.setString(1, contactNumber);
+			preparedStatement.setString(1, contactName);
 			preparedStatement.setLong(2, contactPhone);
-			preparedStatement.setInt(3, contactPhone);
+			preparedStatement.setInt(3, contactId);
 //			ResultSet resultSet = preparedStatement.executeQuery();
 			preparedStatement.executeUpdate();
 //			resultSet.close();
 			preparedStatement.close();
 			connection.close();
+			return true;
 		}
 		
 		 catch(SQLException | ClassNotFoundException e) {
@@ -181,20 +230,60 @@ public class JDBCBackedUserDao  implements UserDao{
 		
 		
 		
-		return true;
+		return false;
 
 	}
 
 	@Override
-	public boolean deleteContact(Contact contact) {
+	public boolean deleteContact(int contactId) {
 		// TODO Auto-generated method stub
+		try
+		{
+			Connection connection = DBUtility.getConnection();
+			String updateQuery = "delete from contact_table  where contact_id = ? ";
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			
+			preparedStatement.setInt(1, contactId);
+//			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
+//			resultSet.close();
+			preparedStatement.close();
+			connection.close();
+			return true;
+		}
+		
+		 catch(SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		
 		return false;
 	}
 
 	@Override
 	public boolean deleteUser(int userId) {
 		// TODO Auto-generated method stub
+		
+		try
+		{
+			Connection connection = DBUtility.getConnection();
+			String updateQuery = "delete from profile_table  where profile_id = ? ";
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			
+			preparedStatement.setInt(1, userId);
+//			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
+//			resultSet.close();
+			preparedStatement.close();
+			connection.close();
+			return true;
+		}
+		
+		 catch(SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		
 		return false;
+		
 	}
 
 }

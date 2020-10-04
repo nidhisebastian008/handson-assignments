@@ -15,16 +15,16 @@ import com.hsbc.model.service.UserService;
 import com.hsbc.model.utilities.UserFactory;
 
 /**
- * Servlet implementation class DeleteProfileServlet
+ * Servlet implementation class DeleteContactServlet
  */
-@WebServlet("/DeleteProfileServlet")
-public class DeleteProfileServlet extends HttpServlet {
+@WebServlet("/DeleteContactServlet")
+public class DeleteContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProfileServlet() {
+    public DeleteContactServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,22 +34,25 @@ public class DeleteProfileServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session=request.getSession();
-		User sessionUser=((User) session.getAttribute("userKey"));
-		
-		UserService service = (UserService)UserFactory.getInstance("service");
-		service.deleteUser(sessionUser.getUserId());//true//flse
-		
-		RequestDispatcher rd = request.getRequestDispatcher("index.html");
-		rd.include(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int contactId=Integer.parseInt(request.getParameter("contactid"));
 		
+		
+		HttpSession session=request.getSession();
+		User sessionUser=((User) session.getAttribute("userKey"));
+		
+		UserService service = (UserService)UserFactory.getInstance("service");
+		
+		service.deleteContact(contactId);//true//falsea
+		
+		RequestDispatcher rd = request.getRequestDispatcher("loginsuccess.jsp");
+		rd.include(request, response);
 	}
 
 }

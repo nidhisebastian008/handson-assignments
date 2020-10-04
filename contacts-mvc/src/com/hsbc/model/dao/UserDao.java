@@ -21,9 +21,9 @@ public interface UserDao {
 	//add contact
 	public Contact storeContact(int userId,Contact contact);
 	//edit contact
-	public Contact updateContact(int contactId,String contactName,long contactPhone);
+	public boolean updateContact(int contactId,String contactName,long contactPhone);
 	//delete contact
-	public boolean  deleteContact(Contact contact);
+	public boolean  deleteContact(int contactId);
 	//delete profile
 	public boolean deleteUser(int userId);
 	

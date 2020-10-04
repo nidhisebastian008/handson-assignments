@@ -43,6 +43,7 @@ public class EditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		doGet(request, response);
+		
 		String updatedPassword=request.getParameter("pass");
 		long phone=Long.parseLong(request.getParameter("phone"));
 		HttpSession session=request.getSession();

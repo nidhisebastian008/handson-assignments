@@ -10,10 +10,10 @@
 
 <h3>Welcome to Login Success Page</h3>
 	<p> Name : ${userKey.name}, Phone: ${userKey.phone}</p>
-	</br>
+	
 	<a href="editprofile.jsp">Edit Profile</a>
 	<a href="addcontact.jsp">Add Contact</a>
-	<a href="ViewContactServlet">View All Contacts</a>
+	<a href="ViewContactsServlet">View All Contacts</a>
 	<a href="editcontact.jsp">Edit Contact</a>
 	<a href="deletecontact.jsp">delete contact</a>
 	<a href="DeleteProfileServlet">delete profile</a>

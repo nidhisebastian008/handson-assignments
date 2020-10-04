@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 		
 		UserService service = (UserService)UserFactory.getInstance("service");
 		try {
-			User user = service.login(id, password);
+			User user = service.login(userId, password);
 			HttpSession session = request.getSession();
 			session.setAttribute("userKey", user);
 			RequestDispatcher rd = request.getRequestDispatcher("loginsuccess.jsp");
